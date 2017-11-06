@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+function translateCharacter(value) {
+	if(!value) {
+    	return ''
+    }
+    
+    var char = value.charAt(0)
+    
+    if(value.length === 1) {
+    	return '\\([^' + char + ']\\|$\\)'
+    }
+        
+    return '\\([^' + char + ']\\|' + char + translateCharacter(value.substring(1)) + '\\|$\\)';
+}
+
+function translateValue() {
+	var translated = document.getElementById('translated');
+    translated.innerText = translateCharacter(document.forms[0].input.value);
+}
+</script>
+</head>
+
+<body>
+
+<p>Script to translate negative lookahead regexp pattern into OCaml regexp</p>
+
+<form>
+Enter string to be ignored:<br />
+<input type="text" name="input" onkeyup="translateValue()" size="50">
+
+</form>
+<p id="translated" />
+</body>
+</html>
